@@ -981,7 +981,7 @@ function configureForm(e) {
         $(".greekbookthumb").css("display", "inline");
         $(".greekbookthumb").each(function() {  
 	   if($(this).hasClass("booktypeTE")) { 
-                 $(this).append("#thumbTE");
+                 $("#thumbTE").append($(this));
            }
            else if ($(this).hasClass("booktypeLI")) {
                  $("#thumbLI").append($(this));
