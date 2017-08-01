@@ -1453,7 +1453,7 @@ function initTable() {
                   "name": $(this).data("fieldname"),
                   "data" : "fields."+$(this).data("fieldname"),
                   "render" : function ( data, type, full, meta ) {
-                     return '<a href="'+data+'">Logeion</a>';
+                     return '<a target="_blank" href="'+data+'">Logeion</a>';
                    },
                   "visible" : $(this).data("visible")
               });
