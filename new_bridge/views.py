@@ -48,7 +48,7 @@ def IndexView(request):
 	
 	
 def AboutView(request):
-     return render(request,'newabout2.html')
+     return render(request,'newabout.html')
 
 #class HelpView(generic.ListView):
 #	template_name = 'help.html'
