@@ -78,6 +78,7 @@ def words_page_redirect(request,language):
     #print request.POST["textlist"],"what happens when request.POST[textlist]"
     #print request.POST,"hello world request post"
     #print request.POST["textlist"]
+    print "DEBUG TEXT: ", text
     text_meta = TextMetadata.objects.get(name_for_humans=text)
     text_machine = text_meta.name_for_computers
     if ('book' in request.POST) == True:
@@ -271,14 +272,14 @@ def get_words(request,language,text,bookslist,text_from,text_to,add_remove):
         for each in word_ids:
             #accu1+=1
             #print "WORD LOOP", accu1
-            if language == "latin":
-               count = WordAppearencesLatin.objects.filter(word__exact=each).count()
-            else:
-               count = WordAppearencesGreek.objects.filter(word__exact=each).count()
-            print "DEBUG IS THIS CAUSING PROBLEMS"
-            word = word_property_table.objects.filter(id__exact=each)[0]
-            word.corpus_rank = 9617 - count
-            word.save()
+            #if language == "latin":
+               #count = WordAppearencesLatin.objects.filter(word__exact=each).count()
+            #else:
+               #count = WordAppearencesGreek.objects.filter(word__exact=each).count()
+            #print "DEBUG IS THIS CAUSING PROBLEMS"
+            #word = word_property_table.objects.filter(id__exact=each)[0]
+            #word.corpus_rank = 9617 - count
+            #word.save()
             words_list.append(word_property_table.objects.filter(id__exact=each)[0])
             #if accu1 < 5:
                #print "debug: words_list add on " + accu1

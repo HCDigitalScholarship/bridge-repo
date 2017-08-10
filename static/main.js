@@ -1384,6 +1384,7 @@ function greek_def_function() {
 
 function lemma_function() {
     //console.log($("#Dictionary Entry (macron)"));
+    console.log("THIS SHOULD WORK RIGHT");
     if ($("#Dictionary Entry (macron)").checked == true) {
         hide_column(2);
         show_column(1);
@@ -1391,6 +1392,7 @@ function lemma_function() {
         hide_column(1);
         show_column(2);
     }
+   //if ($("#
 }
 
 $('#backToTopBtn').click(function() {
@@ -1469,7 +1471,7 @@ function initTable() {
                   "name": $(this).data("fieldname"),
                   "data": "fields."+$(this).data("fieldname"),
                   "render": function( data, type, full, meta) {
-                      if (data > 9600) {
+                      if (data > 4000) {
                         return "rare";
                       } else {
                         return data;
@@ -1652,8 +1654,8 @@ function buildToggle(field_options) {
         //toggle visibility (visible col. indicated by .btn class 'active'):
         var thisCol = $(this).attr('value');
         var activeCol = $(this).siblings('.active').attr('value');
-        //console.log("thisCol: " + thisCol);
-        //console.log("activeCol: " + activeCol);
+        console.log("thisCol: " + thisCol);
+        console.log("activeCol: " + activeCol);
         words_table.column(activeCol+':name').visible(false);
         // If none, don't show any columns:
         if (thisCol !== 'none') {

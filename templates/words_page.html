@@ -43,13 +43,16 @@
                         <thead>
                             <tr>
                                 <th class="lemma" data-fieldname='display_lemma' data-fieldtype='Dictionary Entry' data-radio=true data-visible=true>Dictionary Entry</th>
+                                <th class="lemma" data-fieldname='search_lemma' data-fieldtype='Dictionary Entry' data-radio=true data-visible=false>No Diacriticals (For Sorting)</th>
                                 {% if loc_def %}
                                 <th class="def" data-fieldname='english_definition' data-fieldtype='Definitions' data-radio=true data-visible=false>English Definition</th>
                                 <th class="def" data-fieldname='logeion_def' data-fieldtype='Definitions' data-radio=true data-visible=false>Logeion Definition</th>
                                 <th class="def" data-fieldname='local_def' data-fieldtype='Definitions' data-radio=true data-visible=true>Text-Specific</th>
+                                <!--<th class="def" data-fieldname='search_lemma' data-fieldtype='Definitions' data-radio=true data-visible=false>Accentless Words</th>-->
                                 {% else %}
                                 <th class="def" data-fieldname='english_definition' data-fieldtype='Definitions' data-radio=true data-visible=true>English Definition</th>
                                 <th class="def" data-fieldname='logeion_def' data-fieldtype='Definitions' data-radio=true data-visible=false>Logeion Definition</th>
+                                <!--<th class="def" data-fieldname='search_lemma' data-fieldtype='Definitions' data-radio=true data-visible=false>Accentless Words</th>-->
                                 {% endif %}
                                 <th class="Appearance" data-fieldname='position' data-fieldtype='Appearances' data-radio=true data-visible=false>First Appearance</th>
                                 <th class="count" data-fieldname='count' data-fieldtype='Appearances' data-radio=true data-visible=false>Number of Appearances</th>
@@ -57,7 +60,7 @@
                                 <th class="pos" data-fieldname='part_of_speech' data-fieldtype='' data-radio=false data-visible=false>Part of Speech</th>
                                 <th class="logurl" data-fieldname='logeion_url' data-fieldtype='' data-radio=false data-visible=false>Logeion Link</th>
                                 <th class="logUrl2" data-fieldname='logeion_url' data-fieldtype='' data-radio=false data-visible=false>Full Logeion Link</th>
-                                <!--<th class="crank" data-fieldname='corpus_rank' data-fieldtype'' data-radio=false data-visible=false>Corpus Rank</th>-->
+                                <th class="crank" data-fieldname='corpus_rank' data-fieldtype'' data-radio=false data-visible=false>Corpus Rank</th>
                             </tr>
                         </thead>
                         {% else %}
@@ -80,7 +83,7 @@
                                 <th class="pos" data-fieldname='part_of_speech' data-fieldtype='' data-radio=false data-visible=false>Part of Speech</th>
                                 <th class="logUrl" data-fieldname='logeion_url' data-fieldtype='' data-radio=false data-visible=false>Logeion Link</th>
                                 <th class="logUrl2" data-fieldname='logeion_url' data-fieldtype='' data-radio=false data-visible=false>Full Logeion Link</th>
-                                <!--<th class="crank" data-fieldname='corpus_rank' data-fieldtype='' data-radio=false data-visible=false>Corpus Rank</th>-->
+                                <th class="crank" data-fieldname='corpus_rank' data-fieldtype='' data-radio=false data-visible=false>Corpus Rank</th>
 
 
                             </tr>
