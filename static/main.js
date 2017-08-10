@@ -1470,13 +1470,13 @@ function initTable() {
                 columns.push({
                   "name": $(this).data("fieldname"),
                   "data": "fields."+$(this).data("fieldname"),
-                  "render": function( data, type, full, meta) {
+                  /*"render": function( data, type, full, meta) {
                       if (data > 4000) {
                         return "rare";
                       } else {
                         return data;
                      }
-                   },
+                   },*/
                   "visible": $(this).data("visible"),
              });
            } else if ($(this).data("fieldname") == "english_extended") {
