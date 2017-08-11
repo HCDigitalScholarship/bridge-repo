@@ -4,12 +4,10 @@ from django.core.management.base import BaseCommand, CommandError
 from new_bridge.models import *
 import sys
 import os
-import mysql.connector
 
 
 #from new_bridge.models import *
 #import pandas as pd
-import mysql.connector
 class Command(BaseCommand):
     help = "Run this command to update the corpus_rank field of all entries in the database."
     def add_arguments(self,parser):
@@ -28,13 +26,6 @@ class Command(BaseCommand):
                print "Please specify which language's corpus ranks you would like to update."
                print "enter either 'greek' or 'latin' on the following line."
                lang = raw_input("enter either 'greek' or 'latin' (no apostrophes) to specify your language. Press CTRL+C to exit.")
-        print "LANGUAGE: ", lang
-	print "BEGINNING UPDATE WORD FREQUENCIES SCRIPT"
-
-	cnx = mysql.connector.connect(user='root', password='safari77',
-                              host='localhost',
-                              database='bridge')
-	cursor = cnx.cursor(buffered=True)
         if lang == "greek":
              query = ("SELECT title, count(title) FROM new_bridge_wordappearencesgreek a JOIN `new_bridge_wordpropertygreek`p on a.word_id = p.`id` GROUP by title ORDER BY count(title) DESC")
         elif lang == "latin":
