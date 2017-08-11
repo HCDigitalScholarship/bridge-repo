@@ -1470,14 +1470,14 @@ function initTable() {
                 columns.push({
                   "name": $(this).data("fieldname"),
                   "data": "fields."+$(this).data("fieldname"),
-                  "render": function( data, type, full, meta) {
+                  /*"render": function( data, type, full, meta) {
                       if (type == 'display') {
                            if (data > 4000) {
                                return "rare";
                            }
                         }
                       return data
-                     },
+                     },*/
                   "visible": $(this).data("visible"),
              });
            } else if ($(this).data("fieldname") == "english_extended") {
@@ -1918,7 +1918,7 @@ function loadWordData(data) {
         var pos = word.fields["part_of_speech"];
         //if(word.fields["proper"] == 1) {
         
-        if( word.fields["proper"] == 1) {
+        if(word.fields["proper"] == 1) {
             //Reading the Proper column of the database to determine if there's a proper noun.
             pos = "Proper_nouns"
         }
