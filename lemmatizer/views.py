@@ -76,10 +76,10 @@ def lemmatizer(request):
 
             filename = '/tmp/'+out_name+'.txt'
             with open(filename, 'wb') as f:
-                #for line in f:
-                        #if line[0]=="#":
-                           #continue
-                        #else:
+                 #for line in f:
+                     #if '#' in line:
+                        #pass
+                     #else:
                 #We open a named temporary file from the data in the form. We change the name """
                  f.write(form['file'].value().read())
                 

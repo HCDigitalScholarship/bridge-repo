@@ -439,7 +439,7 @@ def wordsFromFile(file, lemmatizer, *, use_line_numbers = False):
                             yield Word(form, lemma, location) 
                             totaltokens+=1
                             if lemma!='NONE':
-                            	count+=1
+                                count+=1
                         else: 
                             continue
                 except ValueError:
@@ -498,8 +498,8 @@ def autoLemma(args, *, lemmatizer=None, wordsFromPathList=wordsFromPathList):
     wordcount = 0
     charcount=0
     with open(filepath[0], 'r') as f:
-    	read_data = f.read()
-    	lettercount = len(regex.findall('[A-Za-z]', read_data))
+        read_data = f.read()
+        lettercount = len(regex.findall('[A-Za-z]', read_data))
     with open(filepath[0], 'r') as k:
         for line in k:
                 words = line.split()
@@ -535,7 +535,7 @@ def autoLemma(args, *, lemmatizer=None, wordsFromPathList=wordsFromPathList):
     print("I AM NOT DEAD YET")
     dataf.write("The average sentence length is {} words per sentence.".format(round(avgSent,2)) +"The average word length is {} letters per word.".format(round(lettercount/wordcount,2)))
     if lemmatizer is None:
-    	lemmatizer = LemmaReplacer('latin' if args['latin'] else 'greek', include_ambiguous=args['--include-ambiguous'])
+        lemmatizer = LemmaReplacer('latin' if args['latin'] else 'greek', include_ambiguous=args['--include-ambiguous'])
     print(args['--include-ambiguous'])
     print('set lemmatizer')
     # Find name of text
@@ -600,15 +600,21 @@ def autoLemma(args, *, lemmatizer=None, wordsFromPathList=wordsFromPathList):
         wrapColumnFunction(columns, "TITLE",
                                  lambda lemma: regex.sub(r'\P{L}', '', lemma))
 
-    if args['--force-vi'] or args['--force-ui']:
-        if args['--force-vi']:
-            replacements = [('u', 'v'), ('U', 'V'), ('j', 'i'), ('J', 'I')]
-        elif args['--force-ui']:
-            replacements = [('v', 'u'), ('V', 'U'), ('j', 'i'), ('J', 'I')]
-        def replace(lemma):
-            for pattern, repl in replacements:
+    replacements = [('u', 'v'), ('U', 'V'), ('j', 'i'), ('J', 'I')]
+    def replace(lemma):
+        for pattern, repl in replacements:
                 lemma = regex.sub(pattern, repl, lemma)
-            return lemma
+        return lemma
+    wrapColumnFunction(columns, "TITLE", lambda lemma: replace(lemma))
+    #if args['--force-vi'] or args['--force-ui']:
+    if args['--force-vi']:
+        replacements = [('u', 'v'), ('U', 'V'), ('j', 'i'), ('J', 'I')]
+        #elif args['--force-ui']:
+            #replacements = [('v', 'u'), ('V', 'U'), ('j', 'i'), ('J', 'I')]
+        #def replace(lemma):
+            #for pattern, repl in replacements:
+                #lemma = regex.sub(pattern, repl, lemma)
+            #return lemma
         wrapColumnFunction(columns, "TITLE", lambda lemma: replace(lemma))
 
     if args['--split-into'] == 'files':
