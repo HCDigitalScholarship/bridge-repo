@@ -137,7 +137,7 @@ OUTPUT_COLUMNS = [
     Column("TEXT", 3,
            lambda word, __: word.form),
     Column("LOCATION", 4,
-           lambda word, __: word.location),
+           lambda word, __: word.location.replace('.','_')),
     Column("SECTION", 5,
            lambda word, __:''),
     Column("RUNNING COUNT", 6,
