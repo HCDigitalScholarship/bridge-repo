@@ -77,15 +77,15 @@ def lemmatizer(request):
 
             filename = '/tmp/'+out_name+'.txt'
             with open(filename, 'wb') as f: 
-                 lines=form['file'].value().read().decode("utf-8")
-                 print(lines[5])
-                 for line in lines:
-                 	if '#' in line:
-                                print('found a hashtag in this line: {}'.format(line))
+                 #lines=form['file'].value().read().decode("utf-8")
+                 #print(lines[5])
+                 #for line in lines:
+                 	#if '#' in line:
+                                #print('found a hashtag in this line: {}'.format(line))
                  		#pass
-                 	else:
+                 	#else:
                 #We open a named temporary file from the data in the form. We change the name """
-                 		f.write(line.encode())
+                 f.write(form['file'].value().read())
                  
                 
             with open(filename) as f:
