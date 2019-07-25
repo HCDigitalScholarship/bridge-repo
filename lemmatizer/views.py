@@ -1,4 +1,5 @@
 
+
 import os
 import xlrd
 import csv
@@ -75,15 +76,17 @@ def lemmatizer(request):
             language = str(form['language'].value())
 
             filename = '/tmp/'+out_name+'.txt'
-            with open(filename, 'wb') as f:
-                 
-                 #for line in form['file'].value().read():
-                     #if line.startswith('#'):
-                        #continue
-                     #else:
+            with open(filename, 'wb') as f: 
+                 lines=form['file'].value().read().decode("utf-8")
+                 print(lines[5])
+                 for line in lines:
+                 	if '#' in line:
+                                print('found a hashtag in this line: {}'.format(line))
+                 		#pass
+                 	else:
                 #We open a named temporary file from the data in the form. We change the name """
-                 f.write(form['file'].value().read())
-                 #print(type(form['file'].value()))
+                 		f.write(line.encode())
+                 
                 
             with open(filename) as f:
                 f.read()

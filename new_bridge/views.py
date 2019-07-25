@@ -87,6 +87,12 @@ def Oracle(request):
 def AboutView(request):
 	return render(request,'newabout.html')
 
+def handler500(request):
+    response = render_to_response(
+        '500.html', {}, context_instance=RequestContext(request)
+    )
+    response.status_code = 500
+    return response
 
 # This function takes all of the information submitted through the form and creates a unique url for that query
 # this will allow the user to copy the url and come back to exactly the same place they were before
