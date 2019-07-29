@@ -499,7 +499,7 @@ def autoLemma(args, *, lemmatizer=None, wordsFromPathList=wordsFromPathList):
     charcount=0
     with open(filepath[0], 'r') as f:
         read_data = f.read()
-        lettercount = len(regex.findall('[A-Za-z]', read_data))
+        lettercount = len(regex.findall('[A-Za-z]', read_data))+len(regex.findall('[α-ωΑ-Ω]', read_data))
     with open(filepath[0], 'r') as k:
         for line in k:
                 words = line.split()
@@ -600,7 +600,7 @@ def autoLemma(args, *, lemmatizer=None, wordsFromPathList=wordsFromPathList):
         wrapColumnFunction(columns, "TITLE",
                                  lambda lemma: regex.sub(r'\P{L}', '', lemma))
 
-    replacements = [('u', 'v'), ('U', 'V'), ('j', 'i'), ('J', 'I')]
+    replacements =[('v', 'u'), ('V', 'U'), ('j', 'i'), ('J', 'I')]
     def replace(lemma):
         for pattern, repl in replacements:
                 lemma = regex.sub(pattern, repl, lemma)
@@ -609,8 +609,9 @@ def autoLemma(args, *, lemmatizer=None, wordsFromPathList=wordsFromPathList):
     #if args['--force-vi'] or args['--force-ui']:
     if args['--force-vi']:
         replacements = [('u', 'v'), ('U', 'V'), ('j', 'i'), ('J', 'I')]
-        #elif args['--force-ui']:
-            #replacements = [('v', 'u'), ('V', 'U'), ('j', 'i'), ('J', 'I')]
+        wrapColumnFunction(columns, "TITLE", lambda lemma: replace(lemma))
+    if args['--force-ui']:
+        replacements = [('v', 'u'), ('V', 'U'), ('j', 'i'), ('J', 'I')]
         #def replace(lemma):
             #for pattern, repl in replacements:
                 #lemma = regex.sub(pattern, repl, lemma)
