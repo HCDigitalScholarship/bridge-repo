@@ -76,7 +76,6 @@ def IndexView(request):
 	'index.html', context)
 
 #^^^ pre-autocomplete index view
-# Below code is modified from the GAM
 def Scribe(request):
 	return render(request,'scribe.html')
 def Tools(request):
@@ -86,7 +85,7 @@ def Oracle(request):
 
 def AboutView(request):
 	return render(request,'newabout.html')
-
+#custom error 500 page
 def handler500(request):
     response = render_to_response(
         '500.html', {}, context_instance=RequestContext(request)

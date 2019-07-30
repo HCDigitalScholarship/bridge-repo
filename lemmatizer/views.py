@@ -76,6 +76,7 @@ def lemmatizer(request):
             language = str(form['language'].value())
 
             filename = '/tmp/'+out_name+'.txt'
+            #removed a chunk of code to make the lemmatizer work but have to add a code for ignoring the lines that start with '#'
             with open(filename, 'wb') as f: 
                  #lines=form['file'].value().read().decode("utf-8")
                  #print(lines[5])
@@ -164,6 +165,7 @@ def lemmatizer(request):
             statsfile=open('/tmp/savedata.txt','r')
             contents=statsfile.read()
             statsfile.close()
+            #reading the contents from savedata.txt for display
             return render(request, 'lemmatized.html',{'form':form, 'output_file':output_file,'contents':contents})#,{'test'='hi1'})
     #Remove the tempary txt file, but keep the csv and xlsx output
        # os.unlink(filename)

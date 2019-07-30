@@ -395,7 +395,6 @@ def locationsFromFile(file, *, use_line_numbers = False):
             text, line_number = '', line_number + 1
 
     yield Location(getFormattedLabel(), text)
-#datafile=open("/tmp/savedata.txt" ,'w')
 def wordsFromFile(file, lemmatizer, *, use_line_numbers = False):
     """
     Extracts words as Word tuples from the text file `file`.
@@ -408,6 +407,7 @@ def wordsFromFile(file, lemmatizer, *, use_line_numbers = False):
     Yields:
         word (Word): a Word tuple of the next form to appear in `file`
     """
+    #savedata.txt is a text file in tmp that's going to store some stats, which'll be displayed to the user
     datafile=open("/tmp/savedata.txt" ,'w')
     count=0
     totaltokens=0
@@ -450,6 +450,7 @@ def wordsFromFile(file, lemmatizer, *, use_line_numbers = False):
     print("Percentage lemmatized is {}%".format(round(count/totaltokens,3)*100)) 
     print("Total token count:{}".format(totaltokens))
     print("Automatically lemmatized count:{}".format(count)) 
+    #writing to the txt file here
     datafile.write("Percentage lemmatized is {}%.".format(round((count/totaltokens)*100,2)))
 def wordsFromPathList(paths, lemmatizer, **kwargs):
     """
@@ -477,7 +478,7 @@ def wordsFromPathList(paths, lemmatizer, **kwargs):
                 yield from words
         except IOError:
             exit("Could not find file in path {}".format(path))
-#dataf=open("/tmp/savedata.txt",'a') 
+ 
 def autoLemma(args, *, lemmatizer=None, wordsFromPathList=wordsFromPathList):
     """
     Generates lemmatized spreadsheets from command-line arguments given by
@@ -499,12 +500,14 @@ def autoLemma(args, *, lemmatizer=None, wordsFromPathList=wordsFromPathList):
     charcount=0
     with open(filepath[0], 'r') as f:
         read_data = f.read()
+        #counting letters, greek and latin both
         lettercount = len(regex.findall('[A-Za-z]', read_data))+len(regex.findall('[α-ωΑ-Ω]', read_data))
     with open(filepath[0], 'r') as k:
         for line in k:
                 words = line.split()
                 wordcount+=len(words)
                 charcount+=sum(len(word) for word in words)
+    #create and open a new txt file in tmp, it'll store the same Latin text but without names(so it's easier to count sentences)
     fout=open('/tmp/withoutnames.txt','w')
     namesintext=0
     with open(filepath[0], 'r') as l:
@@ -517,8 +520,11 @@ def autoLemma(args, *, lemmatizer=None, wordsFromPathList=wordsFromPathList):
     print("Total letters are: {}".format(lettercount))
     print("Total words are: {}".format(wordcount))
     fout=open('/tmp/withoutnames.txt','r')
+    #compiling all the sections eg. [1.1] etc
     reg=regex.compile('\[(.*?)\]')
+    #result is like a list of all the sections mentioned in the text
     result = regex.findall(reg, fout.read())
+    #count the number of '.' in the sections like [1.1.1] has two '.'
     dots=0
     for i in range(0,len(result)):
         dots+=(result[i].count('.'))
@@ -526,13 +532,16 @@ def autoLemma(args, *, lemmatizer=None, wordsFromPathList=wordsFromPathList):
         newdata=j.read()
     sentences = regex.split(r'[!?]+|(?<!\.)\.(?!\.)', newdata.replace('\n',''))
     sentences = sentences[:-1]
+    #counting the total sentences now, using sentence markers
     sentence_count = len(sentences)
+    #total sentences also include ; as a marker and minus the '.' from sections
     sentence_count +=read_data.count(';')-dots
     print("Total sentences in the file are: {}".format(sentence_count))
     avgSent=wordcount/sentence_count
     print("The average sentence length is {} words per sentence".format(round(avgSent,2)))
     print("The average word length is {} letters per word".format(round(lettercount/wordcount,2)))
     print("I AM NOT DEAD YET")
+    #do the averages and write the necessary stats in savedata.txt
     dataf.write("The average sentence length is {} words per sentence.".format(round(avgSent,2)) +"The average word length is {} letters per word.".format(round(lettercount/wordcount,2)))
     if lemmatizer is None:
         lemmatizer = LemmaReplacer('latin' if args['latin'] else 'greek', include_ambiguous=args['--include-ambiguous'])
@@ -579,7 +588,7 @@ def autoLemma(args, *, lemmatizer=None, wordsFromPathList=wordsFromPathList):
         columns = OUTPUT_COLUMNS
     else:
         columns = OUTPUT_COLUMNS_WITHOUT_FORMULAE
-
+    #commenting out the sections code because have to write a new one, which'll be the sentence counter
     #if args['--use-detailed-sections']:
         #replaceColumnFunction(columns, "SECTION",
                                     #lambda word, __: detailedSectionFromWord(word))
@@ -600,22 +609,16 @@ def autoLemma(args, *, lemmatizer=None, wordsFromPathList=wordsFromPathList):
         wrapColumnFunction(columns, "TITLE",
                                  lambda lemma: regex.sub(r'\P{L}', '', lemma))
 
-    replacements =[('v', 'u'), ('V', 'U'), ('j', 'i'), ('J', 'I')]
     def replace(lemma):
         for pattern, repl in replacements:
                 lemma = regex.sub(pattern, repl, lemma)
         return lemma
+    #force-ui is the default so it always does the replacements
+    replacements =[('v', 'u'), ('V', 'U'), ('j', 'i'), ('J', 'I')]
     wrapColumnFunction(columns, "TITLE", lambda lemma: replace(lemma))
     #if args['--force-vi'] or args['--force-ui']:
     if args['--force-vi']:
         replacements = [('u', 'v'), ('U', 'V'), ('j', 'i'), ('J', 'I')]
-        wrapColumnFunction(columns, "TITLE", lambda lemma: replace(lemma))
-    if args['--force-ui']:
-        replacements = [('v', 'u'), ('V', 'U'), ('j', 'i'), ('J', 'I')]
-        #def replace(lemma):
-            #for pattern, repl in replacements:
-                #lemma = regex.sub(pattern, repl, lemma)
-            #return lemma
         wrapColumnFunction(columns, "TITLE", lambda lemma: replace(lemma))
 
     if args['--split-into'] == 'files':
