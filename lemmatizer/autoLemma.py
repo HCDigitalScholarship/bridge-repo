@@ -137,6 +137,7 @@ OUTPUT_COLUMNS = [
     Column("TEXT", 3,
            lambda word, __: word.form),
     Column("LOCATION", 4,
+           #replacing the . with _ when writing sections to columns
            lambda word, __: word.location.replace('.','_')),
     Column("SECTION", 5,
            lambda word, __:''),
@@ -150,8 +151,6 @@ OUTPUT_COLUMNS = [
            lambda __, row: LONGDEF_FORMULA.format(LEMMA_COLUMN_LETTER, row)),
     Column("LOCALDEF", 10,
            lambda __, row: LOCALDEF_FORMULA.format(LEMMA_COLUMN_LETTER, row)),
-    #Column("SENTENCE", 11,
-           #lambda word, __: '')
 ]
 
 OUTPUT_COLUMNS_WITHOUT_FORMULAE = [
@@ -502,6 +501,7 @@ def autoLemma(args, *, lemmatizer=None, wordsFromPathList=wordsFromPathList):
         read_data = f.read()
         #counting letters, greek and latin both
         lettercount = len(regex.findall('[A-Za-z]', read_data))+len(regex.findall('[α-ωΑ-Ω]', read_data))
+    #opening the file again, because the same code wasn't working when opened once only
     with open(filepath[0], 'r') as k:
         for line in k:
                 words = line.split()
@@ -511,6 +511,7 @@ def autoLemma(args, *, lemmatizer=None, wordsFromPathList=wordsFromPathList):
     fout=open('/tmp/withoutnames.txt','w')
     namesintext=0
     with open(filepath[0], 'r') as l:
+        #these are all the possible names in a Latin text, removing them from text in withoutnames.txt
         names=['A.', 'D.', 'C.', 'Cn.', 'L.', 'M’.', 'M.', 'N.', 'P.', 'Q.', 'Ser.', 'Sex.', 'Sp.', 'Ti.', 'T.']
         for line in l:
                 for word in names:
@@ -545,9 +546,9 @@ def autoLemma(args, *, lemmatizer=None, wordsFromPathList=wordsFromPathList):
     dataf.write("The average sentence length is {} words per sentence.".format(round(avgSent,2)) +"The average word length is {} letters per word.".format(round(lettercount/wordcount,2)))
     if lemmatizer is None:
         lemmatizer = LemmaReplacer('latin' if args['latin'] else 'greek', include_ambiguous=args['--include-ambiguous'])
+    #lots of print statements to test the code
     print(args['--include-ambiguous'])
     print('set lemmatizer')
-    # Find name of text
     if args['--output']:
         text_name, text_extension = splitext(args['--output'])
         if text_extension != 'xlsx':

@@ -60,7 +60,7 @@ def lemmatizer(request):
         for filename, file in request.FILES.items():
             name = request.FILES[filename].name
         #name='"'+name.split('.')[0]+'"'+name.split('.')[1]
-        #print('the name is {}'.format(name))
+        #removing any spaces in the name of text file
         name=name.replace(" ", "")
         print('the name is {} now'.format(name))
         name = name.split('.')[0]
